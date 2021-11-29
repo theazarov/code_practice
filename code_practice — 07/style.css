@@ -1,0 +1,35 @@
+.hidden{
+    display: none;
+}
+
+table {
+    border-collapse: collapse;
+    width: 500px;
+    height: 300px;
+}
+
+td {
+	width: 50px;
+	height: 50px;
+	border: 1px solid black;
+}
+
+.colorRad{
+    background-color: brown;
+}
+
+.colorGreen{
+    background-color: olive;
+}
+
+ul {
+    margin: 0; /* Обнуляем значение отступов */
+    padding: 4px; /* Значение полей */
+}
+
+ul li {
+    display: inline; /* Отображать как строчный элемент */
+    margin-right: 5px; /* Отступ слева */
+    border: 1px solid #000; /* Рамка вокруг текста */
+    padding: 3px; /* Поля вокруг текста */
+}
