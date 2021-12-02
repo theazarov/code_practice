@@ -1,42 +1,38 @@
 'use strict';
 
-/*Сайт предсказаний на JavaScript
-Сейчас мы с вами сделаем сайт, который будет выдавать предсказания. Пусть на этом сайте будет кнопка, по нажатию на которую будет запускаться таймер, который будет каждые 0.1 секунд выводить в в какой-нибудь див случайное число от 1 до некоторого максимального.
+/*Автодополнение на JavaScript
+Сейчас мы с вами реализуем автодополнение. Под этим термином понимается выпадающая подсказка при вводе текста в инпут. Давайте посмотрим на примере. Ниже я сделал инпут, в который можно ввести название страны. При этом, если ввести какие-то буквы, то под инпутом появится список стран, которые начинаются на введенную строку.
 
-Под дивом пусть будет другая кнопка, по нажатию на которую пользователь нашего сайта может остановить таймер и зафиксировать некоторое число в диве. Это число будет номером предсказания. После этого покажите пользователю предсказание с этим номером, а все лишние кнопки уберите с экрана, чтобы пользователь не мог получить еще одно предсказание. То есть на один заход на сайт - одно предсказание.*/
+При желании можно, чтобы не вводить целиком имя страны, кликнуть мышкой на любую страну и она появится в инпуте. Для этого, в общем-то, автодополнение и нужно. В примере для простоты я сделал только три страны: Belarus, Belgium и Bulgaria. Введите в приведенный ниже инпут сначала символ 'В' английское, а потом 'e' и посмотрите, что будет:*/
 
 let parent = document.getElementById('parent')
-let timer = document.getElementById('timer')
-let text = document.getElementById('text')
-let start = document.getElementById('start')
-let stop = document.getElementById('stop')
+let input = document.getElementById('elem')
+let list = document.getElementById('list')
+let arr  = ['Belarus', 'Belgium', 'Bulgaria']
 
-let good = ['все прекрасно', 'все еще лучше', 'даже очень хорошо', 'у тебя будет гуд морнинг']
-let bad = ['кончится бумага', 'забудешь сдачу', 'будет большая очередь', 'туалет будет занят']
-let arr = [good, bad]
+input.addEventListener('input', function(){
+    let lis = list.querySelectorAll('li')
+    
+    for(let elem of lis){
+        list.removeChild(elem)
+    }
 
-start.addEventListener('click', function(){
-    let random;
-    let bad_good = random = Math.floor(Math.random() * 2)
-
-    let myTimer = setInterval(function(){
-        random = Math.floor(Math.random() * 3)
-
-        timer.innerHTML = random
-    }, 100)
-
-    start.classList.remove('active')
-    stop.classList.add('active') 
-
-    stop.addEventListener('click', function(){
-        clearInterval(myTimer)
-        stop.classList.remove('active')
-
-        if(bad_good == 0){
-            text.classList.add('green')
+    let cleanArr = arr.filter(function(el){
+        if(el.startsWith(input.value)){
+            return true
         } else {
-            text.classList.add('rad')
+            return false
         }
-        text.innerHTML = arr[bad_good][random]
     })
+
+    for(let elem of cleanArr){
+        let li = document.createElement('li')
+        li.innerHTML = elem
+        list.appendChild(li)
+
+        li.addEventListener('click', function(){
+            input.value = li.innerHTML
+            list.innerHTML = ''
+        })
+    }
 })
