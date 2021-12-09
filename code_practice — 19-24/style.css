@@ -1,0 +1,30 @@
+body {
+	text-align: center;
+}
+#input, #list {
+	display: inline-block;
+}
+#list {
+	padding: 0;
+	list-style-type: none;
+}
+li{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.done{
+    text-decoration: line-through;
+}
+
+.btn{
+    border: 1px solid blue; /* Синяя рамка вокруг ссылок */
+    padding: 2px; /* Поля вокруг текста */
+    text-decoration: none; /* Скрываем подчёркивание */
+    margin-right: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.btn:hover {
+    border: 1px solid red; /* Красная рамка при наведении курсора на ссылку */
+    background-color: darkgray;
+   }
