@@ -1,0 +1,13 @@
+.right {
+	border: 1px solid green;
+}
+.wrong {
+	border: 1px solid red;
+}
+
+.red{
+	background-color: red;
+}
+.green{
+	background-color: springgreen;
+}
