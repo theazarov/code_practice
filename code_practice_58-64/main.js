@@ -1,7 +1,7 @@
 "use strict";
 
 let field = document.querySelector("#field");
-let size = 2
+let size = 2;
 
 //Пусть вспомогательная функция range формирует массив с числами от 1 до максимального числа таблицы:
 function range(count) {
@@ -53,7 +53,7 @@ function prepare(size) {
 
 //Наша функция build будет формировать ячейки таблицы, заполняя их числами из массива:
 function build(field, arr) {
-    field.innerHTML = ''
+  field.innerHTML = "";
   for (let i = 0; i < arr.length; i++) {
     let tr = document.createElement("tr");
 
@@ -68,25 +68,22 @@ function build(field, arr) {
 }
 
 //Давайте возьмем этот массив, переберем его циклом и активируем каждую ячейку. Под активацией я понимаю то, что каждая ячейка будет принимать красный фон при клике на нее:
-function activate(cells, size){
-    let counter = 1
-    let last = size * size
+function activate(cells, size) {
+  let counter = 1;
+  let last = size * size;
 
-    for(let td of cells){
-        td.addEventListener('click', function(){
-
-            if(this.innerHTML == counter){
-
-                this.classList.add('active')
-                counter == last ? start(++size) : counter++
-            }
-        })
-    }
+  for (let td of cells) {
+    td.addEventListener("click", function () {
+      if (this.innerHTML == counter) {
+        this.classList.add("active");
+        counter == last ? start(++size) : counter++;
+      }
+    });
+  }
 }
-
 
 //Функция для запуска игры:
-function start(size){
-    activate(build(field, prepare(size)), size)
+function start(size) {
+  activate(build(field, prepare(size)), size);
 }
-start(size)
+start(size);
