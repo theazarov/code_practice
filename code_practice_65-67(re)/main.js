@@ -4,21 +4,16 @@
 let calendar = document.querySelector('#calendar')
 let body = document.querySelector('.body')
 let table = document.getElementById('table')
+let info = document.getElementById('info')
+let prev = document.querySelector('.prev')
+let next = document.querySelector('.next')
 
 let date = new Date()
 let year = date.getFullYear()
 let month = date.getMonth()
+let monts = ['Январь' , 'Февраль' , 'Март' , 'Апрель' , 'Май' , 'Июнь' , 'Июль' , 'Август' , 'Сентябрь' , 'Октябрь' , 'Ноябрь' , 'Декабрь']
 
-let lastDay = getLastDay(year, month)
-
-let arrDaysThisMonth = range(lastDay)
-
-let lastWeekDay = getLastWeekDay(year, month)
-
-let firstWeekDay = getFirstWeekDay(year, month)
-
-let arrNormalize = normalize(arrDaysThisMonth, firstWeekDay, 6 - lastWeekDay)
-let arrTwoDimensionalArr = chunk(arrNormalize, 7)
+info.innerHTML = monts[month] + ' ' + year
 
 //Начнем с того, что сделаем функцию, которая параметром будет принимать целое число и создавать массив чисел от 1 до этого числа:
 function range(days){
@@ -54,17 +49,16 @@ function getLastWeekDay(year, month){
 
 //Давайте теперь дополним наш массив пустыми строками справа и слева. Пусть дня этого у нас будет функция normalize, первым параметром принимающая массив, вторым - сколько пустых строк добавить слева, а третьим - сколько пустых строк справа:
 function normalize(arr, firstDay, lastDay){
-    let i = 0
-    let j = 0
+    console.log(firstDay, lastDay)
 
-    while(i < firstDay){
+    while(0 < firstDay){
         arr.unshift('')
-        i++
+        firstDay--
     }
 
-    while(j < lastDay){
+    while(0 < lastDay){
         arr.push('')
-        j++
+        lastDay--
     }
     return arr
 }
@@ -82,18 +76,57 @@ function chunk(arr, num){
 
 function createTable(table, arr){
 
+    let count = 0
+    body.innerHTML = ''
     for(let i = 0; i < arr.length; i++){
         let tr = document.createElement('tr')
 
         for(let j = 0; j < arr[i].length; j++){
+
+            if(count == 5){
+                break
+            }
             let td = document.createElement('td')
             td.innerHTML = arr[i][j]
-            console.log(arr[i][j])
             tr.appendChild(td)
         }
         table.appendChild(tr)
+
+        count++
     }
-    return console.log('hi')
 }
-createTable(table, arrTwoDimensionalArr)
-console.log(table, arrTwoDimensionalArr)
+
+//Обернем код формирования календаря в функцию:
+function draw(table, year, month){
+
+    let lastDay = getLastDay(year, month)
+    let arrDaysThisMonth = range(lastDay)
+    let lastWeekDay = getLastWeekDay(year, month)
+    let firstWeekDay = getFirstWeekDay(year, month)
+    console.log(lastWeekDay)
+    let arrNormalize = normalize(arrDaysThisMonth, firstWeekDay, 6 - lastWeekDay)
+    let arrTwoDimensionalArr = chunk(arrNormalize, 7)
+
+    createTable(table, arrTwoDimensionalArr)
+}
+draw(body, year, month)
+
+next.addEventListener('click', function() {
+    let date = new Date(year, ++month)
+
+    month = date.getMonth()
+    year = date.getFullYear()
+
+    info.innerHTML = monts[month] + ' ' + year
+    draw(body, year, month)
+});
+
+prev.addEventListener('click', function() {
+	let date = new Date(year, --month)
+
+    month = date.getMonth()
+    year = date.getFullYear()
+
+    info.innerHTML = monts[month] + ' ' + year
+    draw(body, year, month)
+});
